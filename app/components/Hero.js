@@ -239,7 +239,7 @@ export default function Hero() {
           }}
           className="absolute inset-0"
         >
-          <div className="absolute inset-0 bg-gradient-to-b from-white/25 via-white/40 to-white/40" />
+          <div className="absolute inset-0 bg-gradient-to-l from-orange-300/55 via-white/30 to-white/10" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,180,80,0.18),transparent_45%)]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,rgba(255,140,40,0.15),transparent_35%)]" />
           <div className="absolute inset-0 bg-black/20" />
@@ -291,17 +291,18 @@ export default function Hero() {
                 whileInView="visible"
                 viewport={{ once: false, amount: 0.4 }}
                 className="
-                  text-center text-[2.6rem] font-light leading-[0.92] tracking-[-0.05em] text-black
+                  text-center  text-[2.6rem] font-light leading-[0.92] tracking-[-0.05em] text-black
                   sm:text-6xl
                   md:text-[5.5rem]
-                  lg:text-left lg:text-[8rem]
+                  lg:text-left lg:text-[5rem]
                 "
               >
-                Melo gently
+                Melo  gently
                 <br />
+                
                 <span className="ml-0 sm:ml-6 md:ml-10 lg:ml-12 text-white">
                   guides
-                </span>{" "}
+                </span><br/>{" "}
                 you through
                 <br />
                 emotional

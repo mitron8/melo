@@ -12,15 +12,12 @@ const NAV_LINKS = [
 
 const SOCIALS = ["Twitter", "Instagram", "LinkedIn"];
 
-// =========================================
-// STAGGER
-// =========================================
 const overlayContainer = {
   hidden: {},
   visible: {
     transition: {
       staggerChildren: 0.09,
-      delayChildren: 0.3,
+      delayChildren: 0.25,
     },
   },
   exit: {
@@ -33,7 +30,7 @@ const overlayContainer = {
 
 const linkItem = {
   hidden: {
-    x: -80,
+    x: 80,
     opacity: 0,
     filter: "blur(10px)",
   },
@@ -44,13 +41,13 @@ const linkItem = {
     filter: "blur(0px)",
 
     transition: {
-      duration: 0.75,
+      duration: 0.8,
       ease: [0.22, 1, 0.36, 1],
     },
   },
 
   exit: {
-    x: -50,
+    x: 50,
     opacity: 0,
     filter: "blur(6px)",
 
@@ -70,7 +67,7 @@ const panelVariants = {
     clipPath: "inset(0 0 0 0%)",
 
     transition: {
-      duration: 0.65,
+      duration: 0.7,
       ease: [0.22, 1, 0.36, 1],
     },
   },
@@ -94,9 +91,6 @@ export default function Navbar() {
 
   const { scrollY } = useScroll();
 
-  // =========================================
-  // SCROLL
-  // =========================================
   useEffect(
     () =>
       scrollY.on("change", (v) => {
@@ -106,9 +100,6 @@ export default function Navbar() {
     [scrollY]
   );
 
-  // =========================================
-  // LOCK BODY
-  // =========================================
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
 
@@ -122,9 +113,7 @@ export default function Navbar() {
 
   return (
     <>
-      {/* ========================================= */}
-      {/* LEFT PILL */}
-      {/* ========================================= */}
+      {/* LEFT LOGO */}
       <motion.div
         initial={{ opacity: 0, y: -24 }}
         animate={{ opacity: 1, y: 0 }}
@@ -140,7 +129,6 @@ export default function Navbar() {
           }}
           transition={{
             duration: 0.4,
-            ease: "easeOut",
           }}
           className={`${pillBase} px-4 py-2.5 sm:px-5 sm:py-3`}
         >
@@ -156,9 +144,7 @@ export default function Navbar() {
         </motion.div>
       </motion.div>
 
-      {/* ========================================= */}
-      {/* RIGHT PILL */}
-      {/* ========================================= */}
+      {/* MENU BUTTON */}
       <motion.div
         initial={{ opacity: 0, y: -24 }}
         animate={{ opacity: 1, y: 0 }}
@@ -174,42 +160,26 @@ export default function Navbar() {
           animate={{
             scale: scrolled ? 0.9 : 1,
           }}
-          transition={{
-            duration: 0.4,
-            ease: "easeOut",
-          }}
           whileHover={{
             scale: scrolled ? 0.93 : 1.05,
-            borderColor: "rgba(0,0,0,0.18)",
           }}
           whileTap={{
             scale: 0.94,
           }}
-          aria-label="Open menu"
           className={`${pillBase} px-4 py-2.5 sm:px-5 sm:py-3`}
         >
           <span className="font-['Poppins'] text-[10px] font-medium uppercase tracking-[0.35em] text-black/75 sm:text-xs">
             Menu
           </span>
 
-          {/* MENU ICON */}
           <div className="flex flex-col gap-[5px]">
-            <motion.span
-              className="block h-px rounded-full bg-black/55"
-              style={{ width: 16 }}
-            />
-
-            <motion.span
-              className="ml-auto block h-px rounded-full bg-black/55"
-              style={{ width: 10 }}
-            />
+            <span className="block h-px w-4 rounded-full bg-black/55" />
+            <span className="ml-auto block h-px w-2.5 rounded-full bg-black/55" />
           </div>
         </motion.button>
       </motion.div>
 
-      {/* ========================================= */}
-      {/* FULLSCREEN OVERLAY */}
-      {/* ========================================= */}
+      {/* OVERLAY */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -219,268 +189,225 @@ export default function Navbar() {
             exit="exit"
             className="fixed inset-0 z-[100]"
           >
-            {/* PANEL */}
+            {/* BACKGROUND */}
             <motion.div
               variants={panelVariants}
-              className="absolute inset-0 bg-[#100e0c]"
+              className="absolute inset-0 bg-[#0f0d0c]"
             />
 
             {/* GLOWS */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{
-                delay: 0.4,
-                duration: 0.8,
-              }}
-              className="pointer-events-none absolute -right-24 -top-24 h-[420px] w-[420px] rounded-full bg-orange-400/10 blur-[110px]"
-            />
+            <div className="absolute right-[-10%] top-[-10%] h-[500px] w-[500px] rounded-full bg-orange-400/10 blur-[120px]" />
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{
-                delay: 0.55,
-                duration: 0.8,
-              }}
-              className="pointer-events-none absolute -bottom-20 -left-20 h-[320px] w-[320px] rounded-full bg-orange-300/6 blur-[90px]"
-            />
+            <div className="absolute bottom-[-10%] left-[-5%] h-[400px] w-[400px] rounded-full bg-orange-300/5 blur-[120px]" />
 
-            {/* VERTICAL LINE */}
-            <motion.div
-              initial={{
-                scaleY: 0,
-                opacity: 0,
-              }}
-              animate={{
-                scaleY: 1,
-                opacity: 1,
-              }}
-              exit={{
-                scaleY: 0,
-                opacity: 0,
-              }}
-              transition={{
-                delay: 0.45,
-                duration: 0.7,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              style={{ originY: 0 }}
-              className="absolute bottom-10 left-[16%] top-10 hidden w-px bg-white/5 lg:block"
-            />
-
-            {/* ========================================= */}
             {/* CONTENT */}
-            {/* ========================================= */}
-            <div className="relative z-10 flex h-full flex-col px-5 py-6 sm:px-10 sm:py-8 md:px-14 md:py-10 lg:px-20 lg:py-12">
+            <div className="relative z-10 flex h-full flex-col px-6 py-6 sm:px-10 md:px-14 lg:px-20 lg:py-10">
 
-              {/* ========================================= */}
-              {/* TOP ROW */}
-              {/* ========================================= */}
+              {/* TOP */}
               <div className="flex items-center justify-between">
 
-                {/* PREMIUM LOGO */}
+                {/* LOGO */}
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -16 }}
                   transition={{
-                    delay: 0.35,
+                    delay: 0.25,
                     duration: 0.6,
-                    ease: [0.22, 1, 0.36, 1],
                   }}
-                  className="group relative flex items-center gap-4"
+                  className="flex items-center gap-4"
                 >
-                  {/* GLOW */}
-                  <div className="absolute -left-6 top-1/2 h-20 w-20 -translate-y-1/2 rounded-full bg-orange-400/10 blur-3xl transition-all duration-700 group-hover:bg-orange-300/20" />
+                  <img
+                    src="/melologo.png"
+                    alt="Melo"
+                    className="h-5 brightness-110"
+                  />
 
-                  {/* GLASS PILL */}
-                  <motion.div
-                    whileHover={{
-                      scale: 1.03,
-                      borderColor: "rgba(255,255,255,0.12)",
-                    }}
-                    transition={{
-                      duration: 0.4,
-                      ease: [0.22, 1, 0.36, 1],
-                    }}
-                    className="relative flex items-center gap-3 rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-3 backdrop-blur-xl"
-                  >
-                  
+                  <div>
+                    <p className="font-['Poppins'] text-[11px] uppercase tracking-[0.42em] text-white/90">
+                      Melo
+                    </p>
 
-                    {/* LOGO */}
-                    <div className="relative z-10 flex items-center gap-3">
-                      <img
-                        src="/melologo.png"
-                        alt="Melo Logo"
-                        className="h-5 w-auto object-contain brightness-110"
-                      />
-
-                      <div className="flex flex-col">
-                        <span className="font-['Poppins'] text-[11px] uppercase tracking-[0.42em] text-white/90">
-                          Melo
-                        </span>
-
-                        <span className="font-['Inter'] text-[10px] tracking-[0.25em] text-white/28">
-                          Emotional AI
-                        </span>
-                      </div>
-                    </div>
-                  </motion.div>
+                    <p className="mt-1 font-['Inter'] text-[10px] tracking-[0.25em] text-white/28">
+                      Emotional AI
+                    </p>
+                  </div>
                 </motion.div>
 
-                {/* CLOSE BUTTON */}
+                {/* CLOSE */}
                 <motion.button
                   onClick={() => setIsOpen(false)}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 16 }}
                   transition={{
-                    delay: 0.35,
+                    delay: 0.25,
                     duration: 0.6,
-                    ease: [0.22, 1, 0.36, 1],
                   }}
                   whileHover={{
                     scale: 1.05,
-                    borderColor: "rgba(255,255,255,0.2)",
                   }}
                   whileTap={{
                     scale: 0.94,
                   }}
-                  aria-label="Close menu"
-                  className="flex items-center gap-2.5 rounded-full border border-white/10 px-4 py-2.5 sm:px-5 sm:py-3"
+                  className="flex items-center gap-3 rounded-full border border-white/10 px-5 py-3"
                 >
-                  <span className="font-['Poppins'] text-[10px] font-medium uppercase tracking-[0.35em] text-white/45 sm:text-xs">
+                  <span className="font-['Poppins'] text-[10px] uppercase tracking-[0.35em] text-white/45">
                     Close
                   </span>
 
                   <div className="relative h-3 w-3">
-                    <span className="absolute inset-0 m-auto block h-px w-full rotate-45 rounded-full bg-white/45" />
-
-                    <span className="absolute inset-0 m-auto block h-px w-full -rotate-45 rounded-full bg-white/45" />
+                    <span className="absolute inset-0 my-auto h-px rotate-45 bg-white/45" />
+                    <span className="absolute inset-0 my-auto h-px -rotate-45 bg-white/45" />
                   </div>
                 </motion.button>
               </div>
 
-              {/* ========================================= */}
-              {/* NAVIGATION */}
-              {/* ========================================= */}
-              <motion.nav
-                variants={overlayContainer}
-                className="mt-auto flex flex-col justify-end pb-2 pt-8"
-                aria-label="Main navigation"
-              >
-                <ul className="space-y-0">
-                  {NAV_LINKS.map((link, i) => (
-                    <motion.li
-                      key={link.label}
-                      variants={linkItem}
-                    >
-                      <a
-                        href={link.href}
-                        onClick={() => setIsOpen(false)}
-                        onMouseEnter={() => setHovered(i)}
-                        onMouseLeave={() => setHovered(null)}
-                        className="group flex items-end gap-4 border-b border-white/[0.06] py-4 sm:py-5 md:py-6"
-                      >
-                        {/* LEFT */}
-                        <div className="mb-1 flex flex-col items-start gap-0.5 sm:mb-2">
-                          <span className="font-['Poppins'] text-[9px] uppercase tracking-[0.45em] text-white/20 transition-colors duration-400 group-hover:text-orange-300/50 sm:text-[10px]">
-                            0{i + 1}
-                          </span>
+              {/* MAIN */}
+              <div className="flex flex-1 items-center overflow-y-auto py-6">
 
-                          <span className="hidden font-['Inter'] text-[10px] text-white/20 transition-colors duration-400 group-hover:text-white/35 sm:block sm:text-xs">
-                            {link.sub}
-                          </span>
-                        </div>
+                <div className="grid w-full grid-cols-1 gap-16 lg:grid-cols-[0.8fr_1.2fr]">
 
-                        {/* MAIN LINK */}
-                        <motion.span
-                          animate={{
-                            x: hovered === i ? 14 : 0,
+                  {/* LEFT SIDE */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 40 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 30 }}
+                    transition={{
+                      delay: 0.35,
+                      duration: 0.8,
+                    }}
+                    className="hidden lg:flex lg:flex-col lg:justify-between"
+                  >
+                    <div>
+                      <p className="font-['Poppins'] text-[11px] uppercase tracking-[0.45em] text-orange-200/50">
+                        Emotional Intelligence
+                      </p>
 
-                            color:
-                              hovered === i
-                                ? "rgba(255,255,255,0.95)"
-                                : "rgba(255,255,255,0.65)",
-                          }}
-                          transition={{
-                            duration: 0.35,
-                            ease: [0.22, 1, 0.36, 1],
-                          }}
-                          className="font-['Poppins'] text-[2.6rem] font-light leading-none tracking-[-0.04em] sm:text-[4rem] md:text-[5.5rem] lg:text-[7rem]"
+                      <h2 className="mt-8 max-w-md font-['Poppins'] text-[3.5rem] font-light leading-[1.05] tracking-[-0.05em] text-white">
+                        Technology that
+                        <span className="text-orange-200"> understands </span>
+                        human emotions.
+                      </h2>
+
+                      <p className="mt-8 max-w-sm font-['Inter'] text-sm leading-8 text-white/35">
+                        Melo creates a calming digital experience through AI,
+                        thoughtful design, and emotionally aware interactions.
+                      </p>
+                    </div>
+
+                    {/* SOCIALS */}
+                    <div className="flex gap-8">
+                      {SOCIALS.map((s) => (
+                        <a
+                          key={s}
+                          href="#"
+                          className="font-['Poppins'] text-[10px] uppercase tracking-[0.35em] text-white/28 transition-colors duration-300 hover:text-orange-200/70"
                         >
-                          {link.label}
-                        </motion.span>
+                          {s}
+                        </a>
+                      ))}
+                    </div>
+                  </motion.div>
 
-                        {/* ARROW */}
-                        <motion.span
-                          animate={{
-                            opacity: hovered === i ? 1 : 0,
-                            x: hovered === i ? 0 : -12,
-                          }}
-                          transition={{
-                            duration: 0.3,
-                            ease: [0.22, 1, 0.36, 1],
-                          }}
-                          className="mb-2 ml-2 text-orange-300 sm:mb-3 sm:ml-4"
-                          style={{
-                            fontSize:
-                              "clamp(1.1rem, 2.5vw, 2rem)",
-                          }}
-                          aria-hidden="true"
+                  {/* RIGHT NAV */}
+                  <motion.nav
+                    variants={overlayContainer}
+                    className="flex items-center"
+                  >
+                    <ul className="w-full">
+                      {NAV_LINKS.map((link, i) => (
+                        <motion.li
+                          key={link.label}
+                          variants={linkItem}
                         >
-                          →
-                        </motion.span>
-                      </a>
-                    </motion.li>
-                  ))}
-                </ul>
-              </motion.nav>
+                          <a
+                            href={link.href}
+                            onClick={() => setIsOpen(false)}
+                            onMouseEnter={() => setHovered(i)}
+                            onMouseLeave={() => setHovered(null)}
+                            className="group flex items-end border-b border-white/[0.06] py-3 md:py-4 lg:py-5"
+                          >
+                            {/* NUMBER */}
+                            <div className="mr-6 hidden md:block">
+                              <span className="font-['Poppins'] text-[11px] uppercase tracking-[0.45em] text-white/18">
+                                0{i + 1}
+                              </span>
+                            </div>
 
-              {/* ========================================= */}
-              {/* BOTTOM */}
-              {/* ========================================= */}
-              <motion.div
-                initial={{
-                  opacity: 0,
-                  y: 24,
-                }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                exit={{
-                  opacity: 0,
-                  y: 16,
-                }}
-                transition={{
-                  delay: 0.7,
-                  duration: 0.65,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                className="mt-6 flex flex-col gap-4 sm:mt-8 sm:flex-row sm:items-end sm:justify-between"
-              >
-                <p className="max-w-[220px] font-['Inter'] text-[11px] leading-[1.9] text-white/22 sm:max-w-xs sm:text-xs">
+                            {/* LINK */}
+                            <motion.span
+                              animate={{
+                                x: hovered === i ? 14 : 0,
+
+                                color:
+                                  hovered === i
+                                    ? "rgba(255,255,255,0.98)"
+                                    : "rgba(255,255,255,0.68)",
+                              }}
+                              transition={{
+                                duration: 0.35,
+                              }}
+                              className="
+                                font-['Poppins']
+                                font-light
+                                leading-[0.9]
+                                tracking-[-0.05em]
+
+                                text-[2.4rem]
+                                sm:text-[3.2rem]
+                                md:text-[4.2rem]
+                                lg:text-[5rem]
+                                xl:text-[5.8rem]
+                                2xl:text-[6.2rem]
+                              "
+                            >
+                              {link.label}
+                            </motion.span>
+
+                            {/* ARROW */}
+                            <motion.span
+                              animate={{
+                                opacity: hovered === i ? 1 : 0,
+                                x: hovered === i ? 0 : -12,
+                              }}
+                              transition={{
+                                duration: 0.3,
+                              }}
+                              className="ml-5 mb-3 text-orange-300"
+                              style={{
+                                fontSize: "clamp(1.2rem,2vw,2rem)",
+                              }}
+                            >
+                              →
+                            </motion.span>
+                          </a>
+                        </motion.li>
+                      ))}
+                    </ul>
+                  </motion.nav>
+                </div>
+              </div>
+
+              {/* MOBILE FOOTER */}
+              <div className="mt-auto flex flex-col gap-5 lg:hidden">
+                <p className="max-w-xs font-['Inter'] text-xs leading-7 text-white/28">
                   A calming space for emotional wellness,
-                  <br />
                   guided by thoughtful AI.
                 </p>
 
-                <div className="flex items-center gap-5 sm:gap-7">
+                <div className="flex gap-6">
                   {SOCIALS.map((s) => (
                     <a
                       key={s}
                       href="#"
-                      className="font-['Poppins'] text-[9px] uppercase tracking-[0.35em] text-white/28 transition-colors duration-300 hover:text-orange-200/65 sm:text-[10px]"
+                      className="font-['Poppins'] text-[10px] uppercase tracking-[0.35em] text-white/28"
                     >
                       {s}
                     </a>
                   ))}
                 </div>
-              </motion.div>
+              </div>
             </div>
           </motion.div>
         )}
