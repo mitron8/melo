@@ -291,7 +291,7 @@ export default function Hero() {
                 whileInView="visible"
                 viewport={{ once: false, amount: 0.4 }}
                 className="
-                  text-center  text-[2.6rem] font-light leading-[0.92] tracking-[-0.05em] text-black
+                  text-center  text-[2.6rem] font-bold leading-[0.92] tracking-[-0.05em] text-black
                   sm:text-6xl
                   md:text-[5.5rem]
                   lg:text-left lg:text-[5rem]
