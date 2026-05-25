@@ -122,7 +122,7 @@ export default function Hero() {
 
     for (let i = 2; i <= TOTAL_FRAMES; i++) {
       const img = new window.Image();
-      img.src = `./Images/${i}.webp`;
+      img.src = `./images/${i}.webp`;
       loadedImages.push(img);
     }
 
